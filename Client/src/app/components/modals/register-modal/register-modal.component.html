@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><strong>Register</strong></h4>
+  <button type="button" class="btn-close close pull-right" aria-label="Close">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #registerForm="ngForm" id="registerForm" (ngSubmit)="register()">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-6">
+          <label class="text-muted" for="InputUsername">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="InputUsername"
+            placeholder="Enter a username"
+            [(ngModel)]="model.username"
+            name="username"
+          />
+        </div>
+        <div class="col-6">
+          <label class="text-muted" for="InputPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="InputPassword"
+            placeholder="Enter a password"
+            [(ngModel)]="model.password"
+            name="password"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="text-muted" for="InputEmail">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="InputEmail"
+        aria-describedby="emailHelp"
+        placeholder="Example@example.com"
+        [(ngModel)]="model.email"
+        name="email"
+      />
+      <small id="emailHelp" class="form-text text-muted"
+        >We'll never share your email with anyone else.</small
+      >
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button form="registerForm" type="submit" class="btn btn-success">Submit</button>
+  <button type="button" class="btn btn-outline-danger">Cancel</button>
+</div>

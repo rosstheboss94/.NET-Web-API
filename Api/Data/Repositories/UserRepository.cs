@@ -15,11 +15,10 @@ namespace Api.Data.Repositories
 
         public async Task<AppUser> CreateUserAsync(AppUserDto appUserDto)
         {
-            var selectedUser = await _dbContext.Users
-                .Where(user => user.UserName == appUserDto.UserName)
-                .FirstOrDefaultAsync();
-            
-            if(selectedUser == null)
+            var selectedUser = await _dbContext.Users.AnyAsync(user => user.UserName == appUserDto.UserName 
+                || user.Email == appUserDto.Email);
+
+            if(!selectedUser)
             {
                 var user = new AppUser
                 {
@@ -28,9 +27,9 @@ namespace Api.Data.Repositories
                     Email = appUserDto.Email
                 };
 
-                _dbContext.Users.Add(user);
+                await _dbContext.Users.AddAsync(user);
+                return user;
             }  
-            
             return null;
         }
 

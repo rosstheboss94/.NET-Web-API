@@ -47,7 +47,7 @@
         </button>
       </form>
 
-      <div *ngIf="userService.currentUser$ | async" class="btn-group mr-3" dropdown>
+      <div *ngIf="(userService.currentUser$ | async) as user" class="btn-group mr-3" dropdown>
         <button
           id="button-animated"
           dropdownToggle
@@ -55,7 +55,7 @@
           class="btn btn-link text-muted dropdown-toggle"
           aria-controls="dropdown-animated"
         >
-          Button dropdown <span class="caret"></span>
+          Welcome {{user.userName}} <span class="caret"></span>
         </button>
         <ul
           id="dropdown-animated"
@@ -64,13 +64,7 @@
           role="menu"
           aria-labelledby="button-animated"
         >
-          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-          <li role="menuitem">
-            <a class="dropdown-item" href="#">Another action</a>
-          </li>
-          <li role="menuitem">
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
+          <li role="menuitem"><a class="dropdown-item" href="#">Sign Out</a></li>
         </ul>
       </div>
 

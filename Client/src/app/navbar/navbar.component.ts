@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from '../models/login';
+import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -12,8 +13,6 @@ export class NavbarComponent implements OnInit {
     username: '',
     password: '',
   };
-
-  test: any = {};
 
   constructor(public userService: UserService) {}
 
