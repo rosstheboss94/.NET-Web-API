@@ -12,4 +12,8 @@ export class JournalsListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  test(){
+    console.log("test");
+    
+  }
 }
