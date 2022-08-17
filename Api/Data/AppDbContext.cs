@@ -13,6 +13,7 @@ namespace Api.Data
 
         public DbSet<Trade> Trades { get; set; }
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<Journal> Journals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
