@@ -1,24 +1,37 @@
-using Api.Data;
+using Api.Dtos;
+using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Api.Controllers
 {
     public class TradeController : ApiController
     {
-        private readonly AppDbContext _dbContext;
-        public TradeController(AppDbContext dbContext)
+        private readonly ITradeRepository _tradeRepository;
+        public TradeController(ITradeRepository tradeRepository)
         {
-            _dbContext = dbContext;
+            _tradeRepository = tradeRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllTrades()
-        {
-            var trades = await _dbContext.Trades.ToListAsync();
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllTrades()
+        // {
+        //     var trades = await _dbContext.Trades.ToListAsync();
             
-            if(trades == null) return BadRequest("Could not get trades");
-            return Ok(trades);
+        //     if(trades == null) return BadRequest("Could not get trades");
+        //     return Ok(trades);
+        // }
+
+        [HttpPost("{username}/journals/trades/add")]
+        public async Task<IActionResult> AddTrade(string username, string journalName, [FromBody]TradeDto tradeDto)
+        {
+            journalName = "Test Journal";
+
+            var trade = await _tradeRepository.AddTradeAsync(username, journalName, tradeDto);
+            
+            if(trade == null) return BadRequest("Something went wrong could not add trade");
+
+            return Ok(trade);
         }
     }
 }

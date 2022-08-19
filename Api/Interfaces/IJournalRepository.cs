@@ -5,7 +5,7 @@ namespace Api.Interfaces
 {
     public interface IJournalRepository
     {
-       Task<IEnumerable<Journal>> GetJournalsAsync(string username);
+       Task<Journal> GetJournalByAsync(AppUser user, string journalName);
        Task<bool> AddJournalAsync(string username, JournalDto journalDto);
     }
 }

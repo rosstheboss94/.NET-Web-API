@@ -38,9 +38,11 @@ namespace Api.Data.Repositories
             return false;
         }
 
-        public Task<IEnumerable<Journal>> GetJournalsAsync(string username)
+        public async Task<Journal> GetJournalByAsync(AppUser user, string journalName)
         {
-            throw new NotImplementedException();
+            return await _context.Journals
+                .Where(journal => journal.AppUserId == user.Id && journal.Name == journalName)
+                .FirstOrDefaultAsync();
         }
     }
 }
