@@ -18,7 +18,7 @@ namespace Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            Seed.SeedData(modelBuilder);
+            //Seed.SeedData(modelBuilder);
 
         }
     }

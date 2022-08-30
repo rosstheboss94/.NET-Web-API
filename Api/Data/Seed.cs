@@ -11,12 +11,20 @@ namespace Api.Data
             modelBuilder.Entity<AppUser>().HasData(
                 new AppUser()
                 {
-                    Id = 1,
                     UserName = "User",
                     Password = "Pa$$w0rd",
-                    Email = "user@user.com",
+                    Email = "user@user.com"
                 }
             );
+
+            // modelBuilder.Entity<Journal>().HasData(
+            //     new Journal()
+            //     {
+            //         Name = "Journal 1",
+            //         Description = "Journal 1 Description",
+            //         AppUserId = 1,     
+            //     }
+            // );
 
             // modelBuilder.Entity<Trade>().HasData(
             //     new Trade() 

@@ -28,7 +28,7 @@ namespace Api.Data.Repositories
                     {
                         Name = journalDto.Name,
                         Description = journalDto.Description,
-                        DateCreated = DateTime.Now
+                        AppUserId = user.Id
                     }
                 );
                 
@@ -38,11 +38,57 @@ namespace Api.Data.Repositories
             return false;
         }
 
-        public async Task<Journal> GetJournalByAsync(AppUser user, string journalName)
+        public async Task<bool> DeleteJournalAsync(string username, string journalName)
         {
-            return await _context.Journals
-                .Where(journal => journal.AppUserId == user.Id && journal.Name == journalName)
+            var journal = await _context.Journals
+                .Where(journal => journal.Name == journalName && journal.AppUser.UserName == username)
                 .FirstOrDefaultAsync();
+            
+            if(journal != null)
+            {
+                _context.Entry(journal).State = EntityState.Deleted;
+                return await _context.SaveChangesAsync() > 0;
+            }
+            
+            return false;
+        }
+
+        public async Task<Journal> GetJournalByNameAsync(string username, string journalName)
+        {
+            var user = await _context.Users
+                .Include(user => user.Journals)
+                .Where(user => user.UserName == username)
+                .FirstOrDefaultAsync();
+            
+            if(user != null)
+            {
+                var journal = user.Journals.FirstOrDefault(journal => journal.Name == journalName);
+                if(journal != null) return journal;
+            }
+
+            return null;            
+        }
+
+        public async Task<Journal> UpdateJournalAsync(string username, string journalName, JournalDto journalDto)
+        {
+            var user = await _context.Users
+                .Include(user => user.Journals)
+                .Where(user => user.UserName == username)
+                .FirstOrDefaultAsync();
+            
+            if(user != null)
+            {
+                var journal = user.Journals.FirstOrDefault(journal => journal.Name == journalName);
+                if(journal != null)
+                {
+                    journal.Name = journalDto.Name;
+                    journal.Description = journalDto.Description;
+
+                    return journal;
+                }
+            }
+
+            return null;
         }
     }
 }
