@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { RegisterModalComponent } from '../components/modals/register-modal/register-modal.component';
+import { RegisterModalComponent } from '../modals/register-modal/register-modal.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   bsModalRef?: BsModalRef;

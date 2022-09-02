@@ -1,0 +1,28 @@
+.journal-card {
+  .card-body {
+    display: flex;
+    flex-direction: row;
+    height: 5rem;
+    // background-color: #6c757d;
+
+    img {
+      height: 90%;
+    }
+
+    .journal-name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      //color: white;
+    }
+
+    .journal-notes {
+      border-radius: 3px;
+      //background-color: #585f66;
+      //color: white;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

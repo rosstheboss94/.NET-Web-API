@@ -31,6 +31,16 @@ namespace Api.Controllers
             return BadRequest("Could not find your journal");
         }
 
+        [HttpGet("{username}/journals")]
+        public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals(string username)
+        {
+            var journals = await _journalRepository.GetJournalsAsync(username);
+
+            if(journals != null) return Ok(journals);
+
+            return BadRequest("Could not find your journals");
+        }
+
         [HttpPut("{username}/journals/{journalName}")]
         public async Task<ActionResult<Journal>> UpdateJournal(string username, string journalName, JournalDto journalDto)
         {

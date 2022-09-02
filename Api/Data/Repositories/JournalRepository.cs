@@ -69,6 +69,13 @@ namespace Api.Data.Repositories
             return null;            
         }
 
+        public async Task<IEnumerable<Journal>> GetJournalsAsync(string username)
+        {
+            return await _context.Journals
+                .Where(j => j.AppUser.UserName == username)
+                .ToListAsync();
+        }
+
         public async Task<Journal> UpdateJournalAsync(string username, string journalName, JournalDto journalDto)
         {
             var user = await _context.Users

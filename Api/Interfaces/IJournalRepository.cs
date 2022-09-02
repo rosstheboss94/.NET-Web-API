@@ -9,5 +9,6 @@ namespace Api.Interfaces
        Task<bool> AddJournalAsync(string username, JournalDto journalDto);
        Task<Journal> UpdateJournalAsync(string username, string journalName, JournalDto journalDto);
        Task<bool> DeleteJournalAsync(string username, string journalName);
+       Task<IEnumerable<Journal>> GetJournalsAsync(string username);
     }
 }

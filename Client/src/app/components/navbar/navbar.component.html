@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">TradeR</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid mx-2 ">
+    <p class="h3 text-secondary">TradeR</p>
     <button
       class="navbar-toggler"
       type="button"
@@ -13,8 +13,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <!-- <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a
             class="nav-link"
@@ -23,7 +23,7 @@
             >Journals</a
           >
         </li>
-      </ul>
+      </ul> -->
 
       <form
         *ngIf="!(userService.currentUser$ | async)"
@@ -47,7 +47,7 @@
           [(ngModel)]="model.password"
           name="password"
         />
-        <button class="btn btn-primary my-2 my-sm-0" type="submit">
+        <button class="btn btn-info my-2 my-sm-0" type="submit">
           Login
         </button>
       </form>
@@ -81,3 +81,4 @@
     </div>
   </div>
 </nav>
+
