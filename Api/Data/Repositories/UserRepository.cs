@@ -8,23 +8,28 @@ namespace Api.Data.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
-        public UserRepository(AppDbContext context)
+        private readonly ITokenService _tokenService;
+        public UserRepository(AppDbContext context, ITokenService tokenService)
         {
+            _tokenService = tokenService;
             _context = context;
         }
 
         public async Task<AppUser> CreateUserAsync(AppUserDto appUserDto)
         {
-            var selectedUser = await _context.Users.AnyAsync(user => user.UserName == appUserDto.UserName 
+            var selectedUser = await _context.Users.AnyAsync(user => user.UserName == appUserDto.UserName.ToLower() 
                 || user.Email == appUserDto.Email);
 
             if(!selectedUser)
             {
+                var token = _tokenService.CreateToken(appUserDto);
+
                 var user = new AppUser
                 {
-                    UserName = appUserDto.UserName,
+                    UserName = appUserDto.UserName.ToLower(),
                     Password = appUserDto.Password,
-                    Email = appUserDto.Email
+                    Email = appUserDto.Email,
+                    Token = token
                 };
 
                 await _context.Users.AddAsync(user);

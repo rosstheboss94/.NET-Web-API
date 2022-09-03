@@ -1,7 +1,11 @@
+using System.Text;
 using Api.Data;
 using Api.Data.Repositories;
 using Api.Interfaces;
+using Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,24 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJournalRepository, JournalRepository>();
 builder.Services.AddScoped<ITradeRepository, TradeRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT_Key"]);
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+		{
+			ValidateIssuer = false,
+			ValidateLifetime = true,
+			ValidateIssuerSigningKey = true,
+			IssuerSigningKey = new SymmetricSecurityKey(key)
+		};
+});
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => 
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

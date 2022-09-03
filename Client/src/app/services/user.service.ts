@@ -7,7 +7,7 @@ import { Register } from '../models/register';
 import { User } from '../models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   baseUrl = environment.apiUrl;
@@ -15,26 +15,26 @@ export class UserService {
   private currentUserSubject = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  login(model: Login){
+  login(model: Login) {
     return this.http.post<User>(`${this.baseUrl}/user/login`, model).pipe(
       map((user: User) => {
-        if(user){
-          console.log(user);
-          this.currentUserSubject.next(user);
-        }
+        if (user) this.setUser(user);
       })
-    )
+    );
   }
 
-  register(model: Register){
+  register(model: Register) {
     return this.http.post<User>(`${this.baseUrl}/user/register`, model).pipe(
       map((user: User) => {
-        if(user){
-          this.currentUserSubject.next(user);
-        }
+        if (user) this.setUser(user);
       })
-    )
+    );
+  }
+
+  setUser(user: User) {
+    this.currentUserSubject.next(user);
+    localStorage.setItem('JWT-Token', user.token);
   }
 }
