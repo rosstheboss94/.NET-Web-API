@@ -1,10 +1,12 @@
 using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [Authorize]
     public class JournalController : ApiController
     {
         private readonly IJournalRepository _journalRepository;
@@ -34,6 +36,7 @@ namespace Api.Controllers
         [HttpGet("{username}/journals")]
         public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals(string username)
         {
+            var test = User.Identity.IsAuthenticated;
             var journals = await _journalRepository.GetJournalsAsync(username);
 
             if(journals != null) return Ok(journals);

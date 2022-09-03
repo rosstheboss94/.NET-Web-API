@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -18,6 +18,7 @@ import { TradeCardComponent } from './components/cards/trade-card/trade-card.com
 import { JournalFormComponent } from './components/forms/journal-form/journal-form.component';
 import { TradeFormComponent } from './components/forms/trade-form/trade-form.component';
 import { JournalEditComponent } from './components/journal-edit/journal-edit.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { JournalEditComponent } from './components/journal-edit/journal-edit.com
     BsDropdownModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,7 +32,7 @@ namespace Api.Services
 			        new Claim(ClaimTypes.Name, appUserDto.UserName),
                     new Claim(ClaimTypes.Email, appUserDto.Email)                    
 		        }),
-		        Expires = DateTime.Now.AddDays(1),
+		        Expires = DateTime.Now.AddDays(7),
 		        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),SecurityAlgorithms.HmacSha256Signature)
 		    };
 

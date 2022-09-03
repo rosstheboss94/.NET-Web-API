@@ -20,8 +20,6 @@ export class RegisterModalComponent implements OnInit {
   }
 
   register(){
-    console.log(this.model);
-    
     this.userService.register(this.model).subscribe();
   }
 
