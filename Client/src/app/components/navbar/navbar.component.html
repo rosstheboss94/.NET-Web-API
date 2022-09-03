@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid mx-2 ">
-    <p class="h3 text-secondary">TradeR</p>
+  <div class="container-fluid mx-2">
+    <p class="h3 text-secondary" routerLink="/">TradeR</p>
     <button
       class="navbar-toggler"
       type="button"
@@ -13,8 +13,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <!-- <ul class="navbar-nav mr-auto">
+    <div
+      class="collapse navbar-collapse justify-content-end ml-3"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            >Home</a
+          >
+        </li>
         <li class="nav-item">
           <a
             class="nav-link"
@@ -23,8 +34,7 @@
             >Journals</a
           >
         </li>
-      </ul> -->
-
+      </ul>
       <form
         *ngIf="!(userService.currentUser$ | async)"
         #loginForm="ngForm"
@@ -47,9 +57,7 @@
           [(ngModel)]="model.password"
           name="password"
         />
-        <button class="btn btn-info my-2 my-sm-0" type="submit">
-          Login
-        </button>
+        <button class="btn btn-info my-2 my-sm-0" type="submit">Login</button>
       </form>
 
       <div
@@ -61,7 +69,7 @@
           id="button-animated"
           dropdownToggle
           type="button"
-          class="btn btn-link text-muted dropdown-toggle"
+          class="btn btn-primary text-white dropdown-toggle"
           aria-controls="dropdown-animated"
         >
           Welcome {{ user.userName }} <span class="caret"></span>
@@ -81,4 +89,3 @@
     </div>
   </div>
 </nav>
-

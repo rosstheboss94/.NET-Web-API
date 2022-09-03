@@ -10,3 +10,8 @@ export interface Journal {
     appUserId: number;
     trades?: Trade[] | null;
 }
+
+export interface JournalDto {
+    name: string;
+    description: string;
+}

@@ -18,7 +18,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   login(model: Login){
-    return this.http.post<User>(`${this.baseUrl}user/login`, model).pipe(
+    return this.http.post<User>(`${this.baseUrl}/user/login`, model).pipe(
       map((user: User) => {
         if(user){
           console.log(user);
@@ -29,7 +29,7 @@ export class UserService {
   }
 
   register(model: Register){
-    return this.http.post<User>(`${this.baseUrl}user/register`, model).pipe(
+    return this.http.post<User>(`${this.baseUrl}/user/register`, model).pipe(
       map((user: User) => {
         if(user){
           this.currentUserSubject.next(user);

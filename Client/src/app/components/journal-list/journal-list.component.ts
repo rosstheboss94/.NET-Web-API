@@ -19,9 +19,7 @@ export class JournalListComponent implements OnInit {
   getJournals(){
     this.journalService.getJournals().subscribe(
       (journals) => {
-        console.log(journals);
         this.journals = [...journals]
-        console.log(this.journals);
       }
     );
   }

@@ -1,22 +1,64 @@
-<div class="container-fluid">
-    <div>
-        <p>Add a <span class="text-success">NEW</span> Journal</p>
-    </div>
-    <form>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+<div class="container-fluid w-50 mt-3 bg-light border rounded p-3">
+  <div class="mb-2">
+    <h3 class="d-inline">
+      Add a <span class="text-success">NEW</span> Journal
+    </h3>
+    <i class="bi bi-x-square-fill float-right text-danger" routerLink="/User/journals"></i>
+  </div>
 
+  <form #journalForm="ngForm" (ngSubmit)="create()">
+    <div class="form-group">
+      <label for="name">Journal Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        aria-describedby="journalHelp"
+        [(ngModel)]="model.name"
+        name="name"
+        #name="ngModel"
+        required
+        minlength="4"
+        maxlength="20"
+      />
+    </div>
+    <div
+      *ngIf="name.invalid && (name.dirty || name.touched)"
+    >
+      <div *ngIf="name.errors?.['required']" class="text-danger">Name is required.</div>
+      <div *ngIf="name.errors?.['minlength']" class="text-danger">
+        Name must be at least 4 characters long.
+      </div>
+      <div *ngIf="name.errors?.['maxlength']" class="text-danger">Name must be less than 20 characters long</div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Journal Description:</label>
+      <textarea
+        class="form-control"
+        id="description"
+        [(ngModel)]="model.description"
+        name="description"
+        #desc="ngModel"
+        required
+      ></textarea>
+    </div>
+
+    <div *ngIf="desc.invalid && (desc.dirty || desc.touched)">
+        <div *ngIf="desc.errors?.['required']" class="text-danger"> Description is required</div>
+    </div>
+
+    <div class="form-group d-flex justify-content-end mb-0">
+      <div class="btn-group">
+        <button [disabled]="name.invalid || desc.invalid" type="submit" class="btn btn-primary">Submit</button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          routerLink="/User/journals"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

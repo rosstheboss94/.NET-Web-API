@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Login } from '../../models/login';
-import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -14,11 +14,15 @@ export class NavbarComponent implements OnInit {
     password: '',
   };
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit(): void {}
 
   login() {
-    this.userService.login(this.model).subscribe();
+    this.userService.login(this.model).subscribe(
+      () => {
+        this.router.navigateByUrl(`${this.userService.currentUser$}/journals`)
+      }
+    );
   }
 }
