@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
+using Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,16 +18,20 @@ namespace Api.Controllers
         }
 
         [HttpPost("{username}/journals/add")]
-        public async Task<IActionResult> AddJournal(string username, JournalDto journalDto)
+        public async Task<IActionResult> AddJournal(JournalDto journalDto)
         {
-            if(await _journalRepository.AddJournalAsync(username , journalDto)) return Ok();
+            var username = User.GetUsername();
+
+            if(await _journalRepository.AddAsync(username, journalDto)) return Ok();
 
             return BadRequest("Something went wrong");
         }
 
         [HttpGet("{username}/journals/{journalName}")]
-        public async Task<ActionResult<Journal>> GetJournal(string username, string journalName)
+        public async Task<ActionResult<Journal>> GetJournal([FromRoute]string journalName)
         {
+            var username = User.GetUsername();
+
             var journal = await _journalRepository.GetJournalByNameAsync(username, journalName);
 
             if(journal != null) return Ok(journal);
@@ -33,10 +39,11 @@ namespace Api.Controllers
             return BadRequest("Could not find your journal");
         }
 
-        [HttpGet("{username}/journals")]
-        public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals(string username)
+        [HttpGet("user/journals")]
+        public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals()
         {
-            var test = User.Identity.IsAuthenticated;
+            var username = User.GetUsername();
+
             var journals = await _journalRepository.GetJournalsAsync(username);
 
             if(journals != null) return Ok(journals);
@@ -44,20 +51,22 @@ namespace Api.Controllers
             return BadRequest("Could not find your journals");
         }
 
-        [HttpPut("{username}/journals/{journalName}")]
-        public async Task<ActionResult<Journal>> UpdateJournal(string username, string journalName, JournalDto journalDto)
+        [HttpPut("user/journals/{previousName}")]
+        public async Task<ActionResult<Journal>> UpdateJournal(string previousName, JournalDto journalDto)
         {
-            var journal = await _journalRepository.UpdateJournalAsync(username, journalName, journalDto);
+            var username = User.GetUsername();
+
+            var journal = await _journalRepository.UpdateAsync(username, previousName, journalDto);
 
             if(journal != null) return Ok(journal);
 
             return BadRequest("Could not update your journal");
         }
 
-        [HttpDelete("{username}/journals/{journalName}")]
-        public async Task<IActionResult> DeleteJournal(string username, string journalName)
+        [HttpDelete("user/journals/journal/delete/{id}")]
+        public async Task<IActionResult> DeleteJournal(int id)
         {
-            var journal = await _journalRepository.DeleteJournalAsync(username, journalName);
+            var journal = await _journalRepository.DeleteAsync(id);
 
             if(journal) return Ok();
 

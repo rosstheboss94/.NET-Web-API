@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,7 +14,7 @@ namespace Api.Extensions
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                var key = Encoding.UTF8.GetBytes(config.GetSection("JWT_Token").Value);
+                var key = Encoding.UTF8.GetBytes(config.GetSection("JWT_Key").Value);
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
             		{

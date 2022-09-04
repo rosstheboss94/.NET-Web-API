@@ -19,6 +19,7 @@ import { JournalFormComponent } from './components/forms/journal-form/journal-fo
 import { TradeFormComponent } from './components/forms/trade-form/trade-form.component';
 import { JournalEditComponent } from './components/journal-edit/journal-edit.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { DeleteAlertComponent } from './components/alerts/delete-alert/delete-alert.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     TradeCardComponent,
     JournalFormComponent,
     TradeFormComponent,
-    JournalEditComponent
+    JournalEditComponent,
+    DeleteAlertComponent
   ],
   imports: [
     BrowserModule,

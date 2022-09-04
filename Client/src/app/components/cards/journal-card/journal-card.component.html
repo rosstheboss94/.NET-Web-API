@@ -1,13 +1,42 @@
 <div class="journal-card card mb-2">
   <div class="card-body justify-content-center align-items-center">
-    <div class="journal-name col-4 col-md-3"><i class="bi bi-journal-bookmark-fill"> {{journal.name}}</i></div>
+    <div class="journal-name col-4 col-md-3">
+      <i class="bi bi-journal-bookmark-fill"> {{ journal.name }}</i>
+    </div>
     <div class="col">
-      <span class="journal-notes">{{journal.description}}</span>
+      <span class="journal-notes">{{ journal.description }}</span>
     </div>
     <div class="col-3 col-md-3">
-      <button class="btn btn-primary" routerLink="/user/journals/journal1/trades">Enter</button>
-      <button class="btn btn-info mx-2" routerLink="/user/journals/journal1/edit">Edit</button>
-      <button class="btn btn-danger">Delete</button>
+      <button
+        class="btn btn-primary"
+        routerLink="/user/journals/journal1/trades"
+      >
+        Enter
+      </button>
+      <button class="btn btn-info mx-2" (click)="edit(journal)">Edit</button>
+      <button class="btn btn-danger" (click)="displayAlert()">Delete</button>
     </div>
+  </div>
+</div>
+
+<div
+  *ngIf="toDelete"
+  class="alert alert-warning alert-dismissible fade show d-flex"
+  role="alert"
+>
+  <p class="d-inline mb-0">You are about to <strong class="text-danger">DELETE</strong> {{journal.name}}</p>
+  <div class="button-group ml-auto">
+    <button
+      class="btn btn-danger"
+      (click)="delete(journal)"
+    >
+      <span aria-hidden="true">Yes</span>
+    </button>
+    <button
+      class="btn btn-warning" 
+      (click)="displayAlert()"
+    >
+      <span aria-hidden="true">No</span>
+    </button>
   </div>
 </div>

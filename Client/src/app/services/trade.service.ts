@@ -9,7 +9,7 @@ export class TradeService {
 
   constructor(private http: HttpClient) { }
 
-  getAllTrades(){
-    return this.http.get<Trade>(`http://localhost:5028/api/trade`);
-  }
+  // getAllTrades(){
+  //   return this.http.get<Trade>(`http://localhost:5028/api/trade`);
+  // }
 }

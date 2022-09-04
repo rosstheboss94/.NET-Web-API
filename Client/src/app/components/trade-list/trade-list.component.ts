@@ -17,8 +17,8 @@ export class TradeListComponent implements OnInit {
   }
 
   getTrades() {
-    this.tradeService.getAllTrades().subscribe((trades) => {
-      console.log(trades);
-    });
+    // this.tradeService.getAllTrades().subscribe((trades) => {
+    //   console.log(trades);
+    // });
   }
 }

@@ -12,7 +12,7 @@
     <section class="d-flex flex-column justify-content-center h-100">
       <div class="container">
         <div *ngFor="let journal of journals">
-          <app-journal-card [journal]="journal"></app-journal-card>
+          <app-journal-card [journal]="journal" (onDelete)="getJournals($event)"></app-journal-card>
         </div>
       </div>
     </section>

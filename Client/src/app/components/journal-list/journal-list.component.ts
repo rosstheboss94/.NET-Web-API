@@ -9,17 +9,19 @@ import { JournalService } from 'src/app/services/journal.service';
 })
 export class JournalListComponent implements OnInit {
   journals: Journal[];
+  initial = true;
 
   constructor(private journalService: JournalService) { }
 
   ngOnInit(): void {
-    this.getJournals();
+    this.getJournals(this.initial);
   }
 
-  getJournals(){
+  getJournals(reload: boolean){
     this.journalService.getJournals().subscribe(
       (journals) => {
         this.journals = [...journals]
+        this.initial = false;
       }
     );
   }

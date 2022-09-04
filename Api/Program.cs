@@ -7,9 +7,9 @@ AppExtensions.Add(builder.Services, builder.Configuration);
 
 IdentityExtensions.Add(builder.Services, builder.Configuration);
 
-builder.Services.AddCors();
-
 builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+builder.Services.AddCors();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();

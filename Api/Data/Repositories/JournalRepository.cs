@@ -1,7 +1,9 @@
 using Api.Dtos;
 using Api.Entities;
+using Api.Extensions;
 using Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Api.Data.Repositories
 {
@@ -13,9 +15,8 @@ namespace Api.Data.Repositories
             _context = context;
         }
 
-        public async Task<bool> AddJournalAsync(string username, JournalDto journalDto)
+        public async Task<bool> AddAsync(string username, JournalDto journalDto)
         {
-            
             var user = await _context.Users
                 .Include(user => user.Journals)
                 .Where(user => user.UserName == username)
@@ -23,6 +24,8 @@ namespace Api.Data.Repositories
 
             if(user != null)
             {
+                if(user.Journals.Any(j => j.Name == journalDto.Name)) return false;
+
                 user.Journals.Add(
                     new Journal 
                     {
@@ -38,10 +41,10 @@ namespace Api.Data.Repositories
             return false;
         }
 
-        public async Task<bool> DeleteJournalAsync(string username, string journalName)
+        public async Task<bool> DeleteAsync(int id)
         {
             var journal = await _context.Journals
-                .Where(journal => journal.Name == journalName && journal.AppUser.UserName == username)
+                .Where(journal => journal.Id == id)
                 .FirstOrDefaultAsync();
             
             if(journal != null)
@@ -71,12 +74,14 @@ namespace Api.Data.Repositories
 
         public async Task<IEnumerable<Journal>> GetJournalsAsync(string username)
         {
-            return await _context.Journals
+            var journal = await _context.Journals
                 .Where(j => j.AppUser.UserName == username)
                 .ToListAsync();
+            
+            return journal;
         }
 
-        public async Task<Journal> UpdateJournalAsync(string username, string journalName, JournalDto journalDto)
+        public async Task<Journal> UpdateAsync(string username, string previousName,  JournalDto journalDto)
         {
             var user = await _context.Users
                 .Include(user => user.Journals)
@@ -85,12 +90,15 @@ namespace Api.Data.Repositories
             
             if(user != null)
             {
-                var journal = user.Journals.FirstOrDefault(journal => journal.Name == journalName);
+                var journal = user.Journals.FirstOrDefault(journal => journal.Name == previousName);
+
                 if(journal != null)
                 {
                     journal.Name = journalDto.Name;
                     journal.Description = journalDto.Description;
 
+                    await _context.SaveChangesAsync();
+                    
                     return journal;
                 }
             }

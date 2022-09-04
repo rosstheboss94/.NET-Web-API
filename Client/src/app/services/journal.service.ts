@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Journal, JournalDto } from '../models/journal';
+import { UserService } from './user.service';
+import { ReplaySubject, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,41 @@ import { Journal, JournalDto } from '../models/journal';
 export class JournalService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  private journalSubject = new ReplaySubject<Journal>(1);
+  journal$ = this.journalSubject.asObservable();
+
+  constructor(private userService: UserService, private http: HttpClient) { }
 
   getJournals(){
-    return this.http.get<Journal[]>(`${this.baseUrl}/journal/User/journals`);
+    return this.http.get<Journal[]>(`${this.baseUrl}/journal/user/journals`);
+  }
+
+  getJournalByName(){
+    let currentUser = this.userService.getUser();
+    let journal = this.getJournal();
+    return this.http.get<Journal>(`${this.baseUrl}/journal/${currentUser}/journals/${journal.name}`);
   }
 
   add(model: JournalDto){
     return this.http.post(`${this.baseUrl}/journal/User/journals/add`, model);
   }
+
+  update(journal: Journal, model: JournalDto){
+    return this.http.put<Journal>(`${this.baseUrl}/journal/user/journals/${journal.name}`, model);
+  }
+
+  delete(journal: Journal){
+    return this.http.delete<Journal>(`${this.baseUrl}/journal/user/journals/journal/delete/${journal.id}`);
+  }
+
+  setJournal(journal: Journal){
+    this.journalSubject.next(journal);
+  }
+
+  getJournal(){
+    let selectedJournal: Journal;
+    this.journal$.pipe(take(1)).subscribe(journal => selectedJournal = journal);
+    return selectedJournal;
+  }
+
 }

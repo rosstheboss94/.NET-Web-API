@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, ReplaySubject } from 'rxjs';
+import { map, ReplaySubject, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Login } from '../models/login';
 import { Register } from '../models/register';
@@ -36,5 +36,11 @@ export class UserService {
   setUser(user: User) {
     this.currentUserSubject.next(user);
     localStorage.setItem('JWT-Token', user.token);
+  }
+
+  getUser() {
+    let currentUser: User;
+    this.currentUser$.pipe(take(1)).subscribe((user) => (currentUser = user));
+    return currentUser;
   }
 }
