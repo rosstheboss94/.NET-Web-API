@@ -13,11 +13,11 @@ namespace Api.Data.Repositories
             _context = context;
         }
 
-        public async Task<Trade> AddTradeAsync(string username, string journalName, TradeDto tradeDto)
+        public async Task<Trade> AddAsync(int journalId, TradeDto tradeDto)
         {
             var journal = await _context.Journals
             .Include(j => j.Trades)
-            .Where(j => j.AppUser.UserName == username && j.Name == journalName)
+            .Where(j => j.Id == journalId)
             .FirstOrDefaultAsync();
 
             if(journal != null)
@@ -45,10 +45,10 @@ namespace Api.Data.Repositories
             return null;
         }
 
-        public async Task<bool> DeleteTradeAsync(string username, string journalName, int id)
+        public async Task<bool> DeleteAsync(int tradeId)
         {
             var trade = await _context.Trades
-            .Where(t => t.Journal.AppUser.UserName == username && t.Id == id)
+            .Where(t => t.Id == tradeId)
             .FirstOrDefaultAsync();
 
             if(trade != null)
@@ -60,23 +60,26 @@ namespace Api.Data.Repositories
             return false; 
         }
 
-        public async Task<IEnumerable<Trade>> GetAllTradesAsync(string username, string journalName)
+        public async Task<IEnumerable<Trade>> GetAllAsync(int journalId)
         {
             return await _context.Trades
-                .Where(t => t.Journal.AppUser.UserName == username && t.Journal.Name == journalName)
+                .Where(t => t.JournalId == journalId)
+                .OrderByDescending(t => t.DateCreated)
                 .ToListAsync();
         }
 
-        public async Task<Trade> UpdateTradeAsync(string username, string journalName, int id, TradeDto tradeDto)
+        public async Task<Trade> UpdateAsync(int tradeId, TradeDto tradeDto)
         {
-            var journal = await _context.Journals
-            .Include(j => j.Trades)
-            .Where(j => j.AppUser.UserName == username && j.Name == journalName)
-            .FirstOrDefaultAsync();
-
-            if(journal != null)
-            {
-                var trade = journal.Trades.FirstOrDefault(t => t.Id == id);
+            // var journal = await _context.Journals
+            // .Include(j => j.Trades)
+            // .Where(j => j.AppUser.UserName == username && j.Name == journalName)
+            // .FirstOrDefaultAsync();
+            var trade = await _context.Trades
+                .Where(t => t.Id == tradeId)
+                .FirstOrDefaultAsync();
+            // if(journal != null)
+            // {
+            //     var trade = journal.Trades.FirstOrDefault(t => t.Id == id);
                 if(trade != null)
                 {
                     trade.Type = tradeDto.Type;
@@ -84,13 +87,14 @@ namespace Api.Data.Repositories
                     trade.Ticker = tradeDto.Ticker;
                     trade.Entry = tradeDto.Entry;
                     trade.TakeProfit = tradeDto.TakeProfit;
+                    trade.StopLoss = tradeDto.StopLoss;
                     trade.RiskReward = tradeDto.RiskReward;
                     trade.Notes = tradeDto.Notes;
 
                     await _context.SaveChangesAsync();
                     return trade;
                 }
-            }
+            //}
             
             return null;
         }

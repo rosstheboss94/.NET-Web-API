@@ -1,0 +1,78 @@
+<div class="container-fluid w-50 mt-3 bg-light border rounded p-3">
+    <div class="mb-2">
+      <h3 class="d-inline">
+        Update Trade
+      </h3>
+      <i
+        class="bi bi-x-square-fill float-right text-danger"
+        (click)="cancel()"
+      ></i>
+    </div>
+  
+    <form #tradeForm="ngForm" (ngSubmit)="edit()">
+      <div class="form-group">
+        <label for="type">Type:</label>
+        <select class="custom-select" [(ngModel)]="model.type" name="type">
+            <option selected>Open this select menu</option>
+            <option value="FOREX">FOREX</option>
+            <option value="STOCK">STOCK</option>
+            <option value="CRYPTO">CRYPTO</option>
+          </select>
+      </div>
+      <div class="form-group">
+        <label for="ticker">Ticker:</label>
+        <input class="form-control" type="text" [(ngModel)]="model.ticker" name="ticker" />
+      </div>
+      <div class="row my-2">
+        <div class="col-md-4">
+          <label for="entry">Entry:</label>
+          <input class="form-control" type="text" [(ngModel)]="model.entry" name="entry"/>
+        </div>
+        <div class="col-md-4">
+          <label for="takeProfit">Take Profit:</label>
+          <input class="form-control" type="text" [(ngModel)]="model.takeProfit" name="takeProfit"/>
+        </div>
+        <div class="col-md-4">
+          <label for="stopLoss">Stop Loss:</label>
+          <input class="form-control" type="text" [(ngModel)]="model.stopLoss" name="stopLoss"/>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <label for="riskReward">Risk/Reward:</label>
+          <input class="form-control" type="text" [(ngModel)]="model.riskReward" name="riskReward"/>
+        </div>
+        <div class="col-md-6">
+            <label for="result">Result:</label>
+            <select class="custom-select" [(ngModel)]="model.result" name="result">
+                <option selected>Open this select menu</option>
+                <option value="WIN">WIN</option>
+                <option value="LOSS">LOSS</option>
+                <option value="N/A">N/A</option>
+              </select>
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="notes">notes:</label>
+        <textarea class="d-block w-100" name="notes" id="notesTextarea" rows="5" [(ngModel)]="model.notes" name="notes"></textarea>
+      </div>
+      <div class="form-group d-flex justify-content-end mb-0">
+        <div class="btn-group">
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+

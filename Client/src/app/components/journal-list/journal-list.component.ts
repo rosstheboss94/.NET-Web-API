@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Journal } from 'src/app/models/journal';
 import { JournalService } from 'src/app/services/journal.service';
 
@@ -11,7 +12,7 @@ export class JournalListComponent implements OnInit {
   journals: Journal[];
   initial = true;
 
-  constructor(private journalService: JournalService) { }
+  constructor(private journalService: JournalService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getJournals(this.initial);
@@ -21,7 +22,8 @@ export class JournalListComponent implements OnInit {
     this.journalService.getJournals().subscribe(
       (journals) => {
         this.journals = [...journals]
-        this.initial = false;
+        //if(this.initial == false) this.toastr.error('Journal delete');
+        //this.initial = false;
       }
     );
   }

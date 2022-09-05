@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Journal } from 'src/app/models/journal';
+import { User } from 'src/app/models/user';
 import { JournalService } from 'src/app/services/journal.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,15 +14,22 @@ export class JournalCardComponent implements OnInit {
   @Input() journal: Journal;
   @Output() onDelete = new EventEmitter<boolean>();
   toDelete: boolean = false;
+  currentUser: User;
 
   constructor(private journalService: JournalService, private userService: UserService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentUser = this.userService.getUser();
+  }
+
+  enter(journal: Journal){
+    this.journalService.setJournal(journal);
+    this.router.navigateByUrl(`/${this.currentUser}/journals/${this.journal.name}/trades`);
+  }
 
   edit(journal: Journal){
-    let currentUser = this.userService.getUser();
     this.journalService.setJournal(journal);
-    this.router.navigateByUrl(`/${currentUser}/journals/${journal.name}/edit`);
+    this.router.navigateByUrl(`/${this.currentUser}/journals/${journal.name}/edit`);
   }
 
   delete(journal: Journal){

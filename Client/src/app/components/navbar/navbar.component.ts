@@ -19,10 +19,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
-    this.userService.login(this.model).subscribe(
-      () => {
-        this.router.navigateByUrl(`${this.userService.currentUser$}/journals`)
-      }
-    );
+    this.userService.login(this.model).subscribe(() => {
+      this.router.navigateByUrl(`${this.userService.currentUser$}/journals`);
+    });
   }
 }

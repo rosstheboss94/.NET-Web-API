@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { TradeFormComponent } from './components/forms/trade-form/trade-form.com
 import { JournalEditComponent } from './components/journal-edit/journal-edit.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { DeleteAlertComponent } from './components/alerts/delete-alert/delete-alert.component';
+import { EditTradeFormComponent } from './components/forms/edit-trade-form/edit-trade-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { DeleteAlertComponent } from './components/alerts/delete-alert/delete-al
     JournalFormComponent,
     TradeFormComponent,
     JournalEditComponent,
-    DeleteAlertComponent
+    DeleteAlertComponent,
+    EditTradeFormComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { DeleteAlertComponent } from './components/alerts/delete-alert/delete-al
     BrowserAnimationsModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ToastrModule.forRoot(),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

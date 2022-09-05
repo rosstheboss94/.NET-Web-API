@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Trade } from 'src/app/models/trade';
 
 @Component({
   selector: 'app-trade-card',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trade-card.component.scss']
 })
 export class TradeCardComponent implements OnInit {
-
+  trade: Trade;
+  
   constructor() { }
 
   ngOnInit(): void {

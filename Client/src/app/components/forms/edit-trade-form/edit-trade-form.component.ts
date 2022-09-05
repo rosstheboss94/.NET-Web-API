@@ -8,11 +8,11 @@ import { TradeService } from 'src/app/services/trade.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-trade-form',
-  templateUrl: './trade-form.component.html',
-  styleUrls: ['./trade-form.component.scss'],
+  selector: 'app-edit-trade-form',
+  templateUrl: './edit-trade-form.component.html',
+  styleUrls: ['./edit-trade-form.component.scss'],
 })
-export class TradeFormComponent implements OnInit {
+export class EditTradeFormComponent implements OnInit {
   model: TradeDto = {
     type: '',
     result: 'N/A',
@@ -37,16 +37,29 @@ export class TradeFormComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.userService.getUser();
     this.selectedJournal = this.journalService.getJournal();
+    this.setModel();
   }
 
-  add(valid: any) {
-    console.log(valid);
-    
-    this.tradeService.add(this.model).subscribe(() => {
+  edit() {
+    this.tradeService.edit(this.model).subscribe(() => {
       this.router.navigateByUrl(
         `${this.currentUser.username}/journals/${this.selectedJournal.name}/trades`
       );
     });
+  }
+
+  setModel() {
+    let trade = this.tradeService.getTrade();
+    this.model = {
+      type: trade.type,
+      result: trade.result,
+      ticker: trade.ticker,
+      entry: trade.entry,
+      takeProfit: trade.takeProfit,
+      stopLoss: trade.stopLoss,
+      riskReward: trade.riskReward,
+      notes: trade.notes,
+    };
   }
 
   cancel() {
