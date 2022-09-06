@@ -8,14 +8,14 @@ namespace Api.Data
 
         public static void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppUser>().HasData(
-                new AppUser()
-                {
-                    UserName = "User",
-                    Password = "Pa$$w0rd",
-                    Email = "user@user.com"
-                }
-            );
+            // modelBuilder.Entity<AppUser>().HasData(
+            //     new AppUser()
+            //     {
+            //         UserName = "User",
+            //         Password = "Pa$$w0rd",
+            //         Email = "user@user.com"
+            //     }
+            // );
 
             // modelBuilder.Entity<Journal>().HasData(
             //     new Journal()

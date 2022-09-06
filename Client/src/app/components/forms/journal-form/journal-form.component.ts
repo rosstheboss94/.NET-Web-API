@@ -28,9 +28,7 @@ export class JournalFormComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    console.log(this.router.url);
-  }
+  ngOnInit(): void {}
 
   create() {
     this.userService.currentUser$

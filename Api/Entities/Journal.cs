@@ -7,7 +7,7 @@ namespace Api.Entities
         public string Description { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
+        public string AppUserId { get; set; }
         public ICollection<Trade> Trades { get; set; }
     }
 }

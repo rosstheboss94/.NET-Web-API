@@ -1,6 +1,7 @@
 ﻿using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data.Repositories
@@ -9,30 +10,37 @@ namespace Api.Data.Repositories
     {
         private readonly AppDbContext _context;
         private readonly ITokenService _tokenService;
-        public UserRepository(AppDbContext context, ITokenService tokenService)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public UserRepository(AppDbContext context, ITokenService tokenService, UserManager<IdentityUser> userManager)
         {
             _tokenService = tokenService;
+            _userManager = userManager;
             _context = context;
         }
 
         public async Task<AppUser> CreateUserAsync(AppUserDto appUserDto)
         {
-            var selectedUser = await _context.Users.AnyAsync(user => user.UserName == appUserDto.UserName.ToLower() 
-                || user.Email == appUserDto.Email);
+            //var selectedUser = await _context.Users.AnyAsync(user => user.UserName == appUserDto.UserName); 
+                //|| user.Email == appUserDto.Email);
+            var exist = await _userManager.Users.AnyAsync(user => user.UserName == appUserDto.UserName);
 
-            if(!selectedUser)
+            if(exist)
             {
                 var token = _tokenService.CreateToken(appUserDto);
-
+            
                 var user = new AppUser
                 {
                     UserName = appUserDto.UserName.ToLower(),
-                    Password = appUserDto.Password,
                     Email = appUserDto.Email,
                     Token = token
                 };
 
-                await _context.Users.AddAsync(user);
+                var result = await _userManager.CreateAsync(user, appUserDto.Password);
+
+                if(!result.Succeeded) return null;
+
+                //await _context.Users.AddAsync(user);
                 return user;
             }  
             return null;
@@ -42,7 +50,7 @@ namespace Api.Data.Repositories
         {
             var selectedUser = await _context.Users
                 .Where(user => user.UserName == loginDto.UserName)
-                .Where(user => user.Password == loginDto.Password)
+                //.Where(user => user.Password == loginDto.Password)
                 .FirstOrDefaultAsync();
             
             if(selectedUser != null) return selectedUser;

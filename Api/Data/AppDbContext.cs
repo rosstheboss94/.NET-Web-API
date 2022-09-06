@@ -1,10 +1,11 @@
 
 using Api.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -12,7 +13,7 @@ namespace Api.Data
         }
 
         public DbSet<Trade> Trades { get; set; }
-        public DbSet<AppUser> Users { get; set; }
+        //public DbSet<AppUser> Users { get; set; }
         public DbSet<Journal> Journals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
