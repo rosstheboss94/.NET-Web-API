@@ -1,76 +1,62 @@
-using System.Security.Claims;
 using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
 using Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[Authorize]
+public class JournalController : ApiController
 {
-    [Authorize]
-    public class JournalController : ApiController
+    private readonly IJournalRepository _journalRepository;
+    private readonly UserManager<AppUser> _userManager;
+
+    public JournalController(IJournalRepository journalRepository, UserManager<AppUser> userManager)
     {
-        private readonly IJournalRepository _journalRepository;
-        public JournalController(IJournalRepository journalRepository)
-        {
-            _journalRepository = journalRepository;
-        }
+        _userManager = userManager;
+        _journalRepository = journalRepository;
+    }
 
-        [HttpPost("{username}/journals/add")]
-        public async Task<IActionResult> AddJournal(JournalDto journalDto)
-        {
-            var username = User.GetUsername();
+    [HttpPost("{username}/journals/add")]
+    public async Task<IActionResult> AddJournal(JournalDto journalDto)
+    {
+        var user = await GetUser();
+        if(await _journalRepository.AddAsync(user, journalDto)) return Ok();
+        return BadRequest("Something went wrong");
+    }
 
-            if(await _journalRepository.AddAsync(username, journalDto)) return Ok();
+    [HttpGet("user/journals")]
+    public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals()
+    {
+        var user = await GetUser();
+        var journals = await _journalRepository.GetAllAsync(user);
+        if(journals == null) return BadRequest("Could not find your journals");
+        return Ok(journals);
+    }
 
-            return BadRequest("Something went wrong");
-        }
+    [HttpPut("user/journals/{previousJournalName}")]
+    public async Task<ActionResult<Journal>> UpdateJournal(string previousJournalName, JournalDto journalDto)
+    {
+        var user = await GetUser();
+        var journal = await _journalRepository.UpdateAsync(user, previousJournalName, journalDto);
+        if(journal == null) BadRequest("Could not update your journal");
+        return Ok(journal);
+    }
 
-        [HttpGet("{username}/journals/{journalName}")]
-        public async Task<ActionResult<Journal>> GetJournal([FromRoute]string journalName)
-        {
-            var username = User.GetUsername();
-
-            var journal = await _journalRepository.GetJournalByNameAsync(username, journalName);
-
-            if(journal != null) return Ok(journal);
-
-            return BadRequest("Could not find your journal");
-        }
-
-        [HttpGet("user/journals")]
-        public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals()
-        {
-            var username = User.GetUsername();
-
-            var journals = await _journalRepository.GetJournalsAsync(username);
-
-            if(journals != null) return Ok(journals);
-
-            return BadRequest("Could not find your journals");
-        }
-
-        [HttpPut("user/journals/{previousName}")]
-        public async Task<ActionResult<Journal>> UpdateJournal(string previousName, JournalDto journalDto)
-        {
-            var username = User.GetUsername();
-
-            var journal = await _journalRepository.UpdateAsync(username, previousName, journalDto);
-
-            if(journal != null) return Ok(journal);
-
-            return BadRequest("Could not update your journal");
-        }
-
-        [HttpDelete("user/journals/journal/delete/{id}")]
-        public async Task<IActionResult> DeleteJournal(int id)
-        {
-            var journal = await _journalRepository.DeleteAsync(id);
-
-            if(journal) return Ok();
-
-            return BadRequest("Could not delete your journal");
-        }
+    [HttpDelete("user/journals/journal/delete/{id}")]
+    public async Task<IActionResult> DeleteJournal(int id)
+    {
+        var journal = await _journalRepository.DeleteAsync(id);
+        if(journal) return Ok();
+        return BadRequest("Could not delete your journal");
+    }
+    
+    public async Task<AppUser> GetUser()
+    {
+        return await _userManager.Users.FirstOrDefaultAsync(user => user.UserName == User.GetUsername());
     }
 }

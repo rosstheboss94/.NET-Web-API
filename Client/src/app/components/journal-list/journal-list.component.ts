@@ -19,7 +19,7 @@ export class JournalListComponent implements OnInit {
   }
 
   getJournals(reload: boolean){
-    this.journalService.getJournals().subscribe(
+    this.journalService.getAll().subscribe(
       (journals) => {
         this.journals = [...journals]
         //if(this.initial == false) this.toastr.error('Journal delete');

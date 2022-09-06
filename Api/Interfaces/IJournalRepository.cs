@@ -1,14 +1,12 @@
 using Api.Dtos;
 using Api.Entities;
 
-namespace Api.Interfaces
+namespace Api.Interfaces;
+
+public interface IJournalRepository
 {
-    public interface IJournalRepository
-    {
-       Task<Journal> GetJournalByNameAsync(string username, string journalName);
-       Task<bool> AddAsync(string username, JournalDto journalDto);
-       Task<Journal> UpdateAsync(string username, string previousName, JournalDto journalDto);
-       Task<bool> DeleteAsync(int id);
-       Task<IEnumerable<Journal>> GetJournalsAsync(string username);
-    }
+   Task<bool> AddAsync(AppUser user, JournalDto journalDto);
+   Task<Journal> UpdateAsync(AppUser user, string previousJournalName, JournalDto journalDto);
+   Task<bool> DeleteAsync(int id);
+   Task<IEnumerable<Journal>> GetAllAsync(AppUser user);
 }

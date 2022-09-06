@@ -16,14 +16,15 @@ export class JournalService {
 
   constructor(private userService: UserService, private http: HttpClient) { }
 
-  getJournals(){
+  getAll(){
     return this.http.get<Journal[]>(`${this.baseUrl}/journal/user/journals`);
   }
 
-  getJournalByName(){
-    let currentUser = this.userService.getUser();
+  getJournalByName(){}
+
+  getById(){
     let journal = this.getJournal();
-    return this.http.get<Journal>(`${this.baseUrl}/journal/${currentUser}/journals/${journal.name}`);
+    return this.http.get<Journal>(`${this.baseUrl}/journal/user/journals/${journal.id}`);
   }
 
   add(model: JournalDto){
