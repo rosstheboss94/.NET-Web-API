@@ -2,7 +2,7 @@
   <div class="trade_container border rounded">
     <div class="trade-container-header row">
       <div class="col">
-        <h3 class="text-info">{{ selectedJournal.name | uppercase}} TRADES</h3>
+        <h3 class="text-info">{{ selectedJournal.name | uppercase }} TRADES</h3>
       </div>
       <div class="col d-flex justify-content-end">
         <Button class="btn btn-primary" (click)="add()"> Add</Button>
@@ -40,7 +40,17 @@
                 >
                   {{ trade.result }}
                 </td>
-                <td><button class="btn btn-info">Show</button></td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-info btn-info"
+                    popover="{{ trade.notes }}"
+                    popoverTitle="Notes"
+                    placement="bottom"
+                  >
+                    show
+                  </button>
+                </td>
                 <td>
                   <button class="btn" (click)="edit(trade)">
                     <i class="bi bi-pencil-square"></i>
@@ -52,27 +62,26 @@
               </tr>
               <tr *ngIf="trade.toDelete">
                 <td colspan="9">
-                  <div
-                    class="alert alert-warning alert-dismissible fade show d-flex"
-                    role="alert"
-                  >
-                    <p class="d-inline mb-0">
-                      You are about to
-                      <strong class="text-danger">DELETE</strong> the trade
-                      above
-                    </p>
-                    <div class="button-group ml-auto">
-                      <button class="btn btn-danger" (click)="delete(trade)">
-                        <span aria-hidden="true">Yes</span>
-                      </button>
-                      <button
-                        class="btn btn-warning"
-                        (click)="displayAlert(trade)"
-                      >
-                        <span aria-hidden="true">No</span>
-                      </button>
+                  <alert type="warning">
+                    <div class="d-flex">
+                      <p class="d-inline mb-0">
+                        You are about to
+                        <strong class="text-danger">DELETE</strong> the trade
+                        above
+                      </p>
+                      <div class="d-inline button-group ml-auto">
+                        <button class="btn btn-danger" (click)="delete(trade)">
+                          <span aria-hidden="true">Yes</span>
+                        </button>
+                        <button
+                          class="btn btn-warning"
+                          (click)="displayAlert(trade)"
+                        >
+                          <span aria-hidden="true">No</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  </alert>
                 </td>
               </tr>
             </ng-container>

@@ -14,24 +14,19 @@
   </div>
 </div>
 
-<div
-  *ngIf="toDelete"
-  class="alert alert-warning alert-dismissible fade show d-flex"
-  role="alert"
->
-  <p class="d-inline mb-0">You are about to <strong class="text-danger">DELETE</strong> {{journal.name}}</p>
-  <div class="button-group ml-auto">
-    <button
-      class="btn btn-danger"
-      (click)="delete(journal)"
-    >
-      <span aria-hidden="true">Yes</span>
-    </button>
-    <button
-      class="btn btn-warning" 
-      (click)="displayAlert()"
-    >
-      <span aria-hidden="true">No</span>
-    </button>
+<alert *ngIf="toDelete" type="warning">
+  <div class="d-flex">
+    <p class="d-inline mb-0">
+      You are about to <strong class="text-danger">DELETE</strong>
+      {{ journal.name }}
+    </p>
+    <div class="d-inline button-group ml-auto">
+      <button class="btn btn-danger" (click)="delete(journal)">
+        <span aria-hidden="true">Yes</span>
+      </button>
+      <button class="btn btn-warning" (click)="displayAlert()">
+        <span aria-hidden="true">No</span>
+      </button>
+    </div>
   </div>
-</div>
+</alert>

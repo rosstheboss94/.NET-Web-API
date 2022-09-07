@@ -15,7 +15,6 @@ namespace Api.Extensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
 
-            //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IJournalRepository, JournalRepository>();
             services.AddScoped<ITradeRepository, TradeRepository>();
             services.AddScoped<ITokenService, TokenService>();

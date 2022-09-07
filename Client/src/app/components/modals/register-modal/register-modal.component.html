@@ -1,6 +1,6 @@
-<div class="modal-header">
-  <h4 class="modal-title pull-left"><strong>Register</strong></h4>
-  <button type="button" class="btn-close close pull-right" aria-label="Close">
+<div class="modal-header bg-info">
+  <h4 class="modal-title pull-left text-white"><strong>Register</strong></h4>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true" class="visually-hidden">&times;</span>
   </button>
 </div>
@@ -9,7 +9,7 @@
     <div class="form-group">
       <div class="row">
         <div class="col-6">
-          <label class="text-muted" for="InputUsername">Username</label>
+          <label class="text-muted font-weight-bold" for="InputUsername">Username</label>
           <input
             type="text"
             class="form-control"
@@ -20,7 +20,7 @@
           />
         </div>
         <div class="col-6">
-          <label class="text-muted" for="InputPassword">Password</label>
+          <label class="text-muted font-weight-bold" for="InputPassword">Password</label>
           <input
             type="password"
             class="form-control"
@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-group">
-      <label class="text-muted" for="InputEmail">Email address</label>
+      <label class="text-muted font-weight-bold" for="InputEmail">Email address</label>
       <input
         type="email"
         class="form-control"
@@ -44,13 +44,10 @@
         [(ngModel)]="model.email"
         name="email"
       />
-      <small id="emailHelp" class="form-text text-muted"
-        >We'll never share your email with anyone else.</small
-      >
     </div>
   </form>
 </div>
 <div class="modal-footer">
-  <button form="registerForm" type="submit" class="btn btn-success">Submit</button>
-  <button type="button" class="btn btn-outline-danger">Cancel</button>
+  <button form="registerForm" type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" class="btn btn-outline-danger" (click)="bsModalRef.hide()">Cancel</button>
 </div>

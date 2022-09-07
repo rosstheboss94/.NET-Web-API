@@ -1,7 +1,6 @@
 using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data.Repositories;

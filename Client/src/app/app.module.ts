@@ -4,6 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +50,8 @@ import { EditTradeFormComponent } from './components/forms/edit-trade-form/edit-
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     ToastrModule.forRoot(),
+    PopoverModule.forRoot(),
+    AlertModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

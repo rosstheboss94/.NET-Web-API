@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid mx-2">
-    <p class="h3 text-secondary" routerLink="/">TradeR</p>
+    <p class="h3 text-white" routerLink="/" (click)="isActive(false)">TradeR</p>
     <button
       class="navbar-toggler"
       type="button"
@@ -18,19 +18,20 @@
       id="navbarSupportedContent"
     >
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a
             class="nav-link"
             routerLink="/"
             routerLinkActive="active"
             >Home</a
           >
-        </li>
+        </li> -->
         <li class="nav-item">
           <a
             class="nav-link"
             routerLink="/user/journals"
-            routerLinkActive="active"
+            (click)="isActive(true)"
+            [routerLinkActive]="linkActive"
             >Journals</a
           >
         </li>
@@ -82,7 +83,7 @@
           aria-labelledby="button-animated"
         >
           <li role="menuitem">
-            <a class="dropdown-item" href="#">Sign Out</a>
+            <a class="dropdown-item" (click)="signout()">Sign Out</a>
           </li>
         </ul>
       </div>

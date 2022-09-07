@@ -33,6 +33,11 @@ export class UserService {
     );
   }
 
+  signout(){
+    localStorage.removeItem('JWT-Token');
+    this.currentUserSubject.next(null);
+  }
+
   setUser(user: User) {
     this.currentUserSubject.next(user);
     localStorage.setItem('JWT-Token', user.token);
