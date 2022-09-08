@@ -44,14 +44,14 @@ export class TradeFormComponent implements OnInit {
     
     this.tradeService.add(this.model).subscribe(() => {
       this.router.navigateByUrl(
-        `${this.currentUser.username}/journals/${this.selectedJournal.name}/trades`
+        `${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades`
       );
     });
   }
 
   cancel() {
     this.router.navigateByUrl(
-      `${this.currentUser.username}/journals/${this.selectedJournal.name}/trades`
+      `${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades`
     );
   }
 }

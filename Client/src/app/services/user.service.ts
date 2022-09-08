@@ -29,6 +29,8 @@ export class UserService {
     return this.http.post<User>(`${this.baseUrl}/user/register`, model).pipe(
       map((user: User) => {
         if (user) this.setUser(user);
+        console.log(user);
+        
       })
     );
   }

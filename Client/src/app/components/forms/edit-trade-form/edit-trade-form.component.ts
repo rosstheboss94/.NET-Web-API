@@ -43,7 +43,7 @@ export class EditTradeFormComponent implements OnInit {
   edit() {
     this.tradeService.edit(this.model).subscribe(() => {
       this.router.navigateByUrl(
-        `${this.currentUser.username}/journals/${this.selectedJournal.name}/trades`
+        `${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades`
       );
     });
   }
@@ -64,7 +64,7 @@ export class EditTradeFormComponent implements OnInit {
 
   cancel() {
     this.router.navigateByUrl(
-      `${this.currentUser.username}/journals/${this.selectedJournal.name}/trades`
+      `${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades`
     );
   }
 }

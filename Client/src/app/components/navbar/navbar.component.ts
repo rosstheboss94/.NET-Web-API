@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 import { Login } from '../../models/login';
 import { UserService } from '../../services/user.service';
 
@@ -17,6 +18,8 @@ export class NavbarComponent implements OnInit {
 
   linkActive: string | null = null;
 
+  currentUser: User;
+
   constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
@@ -25,7 +28,8 @@ export class NavbarComponent implements OnInit {
 
   login() {
     this.userService.login(this.model).subscribe(() => {
-      this.router.navigateByUrl(`${this.userService.currentUser$}/journals`);
+      this.setCurrentUser();
+      this.router.navigateByUrl(`${this.currentUser.userName}/journals`);
       this.linkActive = 'active';
     });
   }
@@ -46,8 +50,13 @@ export class NavbarComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem('App-User'));
     if (user) {
       this.userService.setUser(user);
-      this.router.navigateByUrl(`${this.userService.currentUser$}/journals`);
+      this.setCurrentUser();
+      this.router.navigateByUrl(`${this.currentUser.userName}/journals`);
       this.linkActive = 'active';
     }
+  }
+
+  setCurrentUser(){
+    this.currentUser = this.userService.getUser();
   }
 }

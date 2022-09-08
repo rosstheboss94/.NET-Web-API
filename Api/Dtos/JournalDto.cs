@@ -1,8 +1,7 @@
-namespace Api.Dtos
+namespace Api.Dtos;
+
+public class JournalDto
 {
-    public class JournalDto
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-    }
+    public string Name { get; set; }
+    public string Description { get; set; }
 }

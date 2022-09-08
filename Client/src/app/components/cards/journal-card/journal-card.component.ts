@@ -24,12 +24,12 @@ export class JournalCardComponent implements OnInit {
 
   enter(journal: Journal){
     this.journalService.setJournal(journal);
-    this.router.navigateByUrl(`/${this.currentUser}/journals/${this.journal.name}/trades`);
+    this.router.navigateByUrl(`/${this.currentUser.userName}/journals/${this.journal.name}/trades`);
   }
 
   edit(journal: Journal){
     this.journalService.setJournal(journal);
-    this.router.navigateByUrl(`/${this.currentUser}/journals/${journal.name}/edit`);
+    this.router.navigateByUrl(`/${this.currentUser.userName}/journals/${journal.name}/edit`);
   }
 
   delete(journal: Journal){

@@ -38,12 +38,12 @@ export class TradeListComponent implements OnInit {
   }
 
   add() {
-    this.router.navigateByUrl(`/${this.currentUser.username}/journals/${this.selectedJournal.name}/trades/add`);
+    this.router.navigateByUrl(`/${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades/add`);
   }
 
   edit(trade: Trade) {
     this.tradeService.setTrade(trade);
-    this.router.navigateByUrl(`/${this.currentUser.username}/journals/${this.selectedJournal.name}/trades/edit`);
+    this.router.navigateByUrl(`/${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades/edit`);
   }
 
   delete(trade: Trade) {

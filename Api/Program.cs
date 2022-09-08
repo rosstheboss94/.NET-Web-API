@@ -1,9 +1,5 @@
 using Api.Data;
-using Api.Entities;
 using Api.Extensions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,18 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 AppExtensions.Add(builder.Services, builder.Configuration);
 
 IdentityExtensions.Add(builder.Services, builder.Configuration);
-
-builder.Services.AddIdentityCore<AppUser>(o =>
-{
-    o.User.RequireUniqueEmail = true;
-})
-    .AddSignInManager<SignInManager<AppUser>>()
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
-builder.Services.AddCors();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();
@@ -44,6 +28,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+Seed.SeedData(app);
 
 app.Run();
 

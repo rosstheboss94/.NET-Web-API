@@ -4,22 +4,25 @@ using Api.Interfaces;
 using Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Extensions
+namespace Api.Extensions;
+
+public static class AppExtensions
 {
-    public static class AppExtensions
+    public static IServiceCollection Add(this IServiceCollection services, IConfiguration config)
     {
-        public static IServiceCollection Add(this IServiceCollection services, IConfiguration config)
+        services.AddDbContext<AppDbContext>(options => 
         {
-            services.AddDbContext<AppDbContext>(options => 
-            {
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-            });
+            options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        });
 
-            services.AddScoped<IJournalRepository, JournalRepository>();
-            services.AddScoped<ITradeRepository, TradeRepository>();
-            services.AddScoped<ITokenService, TokenService>();
+        services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+        
+        services.AddCors();
 
-            return services;
-        }
+        services.AddScoped<IJournalRepository, JournalRepository>();
+        services.AddScoped<ITradeRepository, TradeRepository>();
+        services.AddScoped<ITokenService, TokenService>();
+
+        return services;
     }
 }

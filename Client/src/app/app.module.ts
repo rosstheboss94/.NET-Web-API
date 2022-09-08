@@ -17,12 +17,10 @@ import { FormsModule } from '@angular/forms';
 import { RegisterModalComponent } from './components/modals/register-modal/register-modal.component';
 import { JournalListComponent } from './components/journal-list/journal-list.component';
 import { JournalCardComponent } from './components/cards/journal-card/journal-card.component';
-import { TradeCardComponent } from './components/cards/trade-card/trade-card.component';
 import { JournalFormComponent } from './components/forms/journal-form/journal-form.component';
 import { TradeFormComponent } from './components/forms/trade-form/trade-form.component';
 import { JournalEditComponent } from './components/journal-edit/journal-edit.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { DeleteAlertComponent } from './components/alerts/delete-alert/delete-alert.component';
 import { EditTradeFormComponent } from './components/forms/edit-trade-form/edit-trade-form.component';
 
 @NgModule({
@@ -34,11 +32,9 @@ import { EditTradeFormComponent } from './components/forms/edit-trade-form/edit-
     RegisterModalComponent,
     JournalListComponent,
     JournalCardComponent,
-    TradeCardComponent,
     JournalFormComponent,
     TradeFormComponent,
     JournalEditComponent,
-    DeleteAlertComponent,
     EditTradeFormComponent
   ],
   imports: [
