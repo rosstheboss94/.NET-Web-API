@@ -14,7 +14,7 @@ export class JournalService {
   private journalSubject = new ReplaySubject<Journal>(1);
   journal$ = this.journalSubject.asObservable();
 
-  constructor(private userService: UserService, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getAll(){
     return this.http.get<Journal[]>(`${this.baseUrl}/journal/user/journals`);

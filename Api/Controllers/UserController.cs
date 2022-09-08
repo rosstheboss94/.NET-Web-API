@@ -1,7 +1,6 @@
 using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
-using Api.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +41,7 @@ public class UserController : ApiController
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto loginDto)
-    {
+    {   
         var user = await _userManager.Users.FirstOrDefaultAsync(user => user.UserName == loginDto.UserName);
 
         if(user == null) return BadRequest("Username doesn't exists");
@@ -50,7 +49,26 @@ public class UserController : ApiController
         var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
         if(!result.Succeeded) return Unauthorized("Password incorrect");
+     
+        if(!User.Identity.IsAuthenticated)
+        {
+            var token = _tokenService.CreateToken(new AppUserDto
+            {
+                UserName = user.UserName,
+                Email = user.Email
+            });
 
-        return Ok(user);
+            user.Token = token;
+
+            await _userManager.UpdateAsync(user);
+        }
+
+        return Ok(new AppUserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            Token = user.Token
+        });
     }
 }

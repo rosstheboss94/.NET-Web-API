@@ -20,16 +20,14 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    
     let currentUser: User;
 
     this.userService.currentUser$
       .pipe(take(1))
       .subscribe((user) => (currentUser = user));
 
-    if (
-      request.url == `${this.baseUrl}/user/login` ||
-      request.url == `${this.baseUrl}/user/register`
-    )
+    if (request.url == `${this.baseUrl}/user/login` || request.url == `${this.baseUrl}/user/register`)
       return next.handle(request);
 
     request = request.clone({

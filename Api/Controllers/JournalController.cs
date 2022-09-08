@@ -25,7 +25,9 @@ public class JournalController : ApiController
     public async Task<IActionResult> AddJournal(JournalDto journalDto)
     {
         var user = await GetUser();
+
         if(await _journalRepository.AddAsync(user, journalDto)) return Ok();
+
         return BadRequest("Something went wrong");
     }
 
@@ -33,8 +35,11 @@ public class JournalController : ApiController
     public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals()
     {
         var user = await GetUser();
+
         var journals = await _journalRepository.GetAllAsync(user);
+
         if(journals == null) return BadRequest("Could not find your journals");
+
         return Ok(journals);
     }
 
@@ -42,8 +47,11 @@ public class JournalController : ApiController
     public async Task<ActionResult<Journal>> UpdateJournal(string previousJournalName, JournalDto journalDto)
     {
         var user = await GetUser();
+
         var journal = await _journalRepository.UpdateAsync(user, previousJournalName, journalDto);
+
         if(journal == null) BadRequest("Could not update your journal");
+
         return Ok(journal);
     }
 
@@ -51,11 +59,13 @@ public class JournalController : ApiController
     public async Task<IActionResult> DeleteJournal(int id)
     {
         var journal = await _journalRepository.DeleteAsync(id);
+
         if(journal) return Ok();
+
         return BadRequest("Could not delete your journal");
     }
     
-    public async Task<AppUser> GetUser()
+    private async Task<AppUser> GetUser()
     {
         return await _userManager.Users.FirstOrDefaultAsync(user => user.UserName == User.GetUsername());
     }

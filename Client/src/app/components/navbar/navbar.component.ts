@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
+
 export class NavbarComponent implements OnInit {
   model: Login = {
     username: '',
@@ -18,7 +19,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(public userService: UserService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isAuthenticated();
+  }
 
   login() {
     this.userService.login(this.model).subscribe(() => {
@@ -27,15 +30,24 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  isActive(isActive: boolean){
-    isActive ? this.linkActive = 'active' : this.linkActive = null;
+  isActive(isActive: boolean) {
+    isActive ? (this.linkActive = 'active') : (this.linkActive = null);
   }
 
-  signout(){
+  signout() {
     this.userService.signout();
     this.router.navigateByUrl('/');
     this.linkActive = null;
     this.model.username = '';
     this.model.password = '';
+  }
+
+  isAuthenticated() {
+    let user = JSON.parse(localStorage.getItem('App-User'));
+    if (user) {
+      this.userService.setUser(user);
+      this.router.navigateByUrl(`${this.userService.currentUser$}/journals`);
+      this.linkActive = 'active';
+    }
   }
 }
