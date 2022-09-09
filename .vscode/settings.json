@@ -1,5 +1,7 @@
 {
     "angular.enable-strict-mode-prompt": false,
     "prettier.singleQuote": true,
-    "prettier.useTabs": true
+    "prettier.useTabs": true,
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "Api/bin/Release/net6.0/publish"
 }

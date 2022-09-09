@@ -9,6 +9,7 @@ import { User } from '../models/user';
 @Injectable({
   providedIn: 'root',
 })
+
 export class UserService {
   baseUrl = environment.apiUrl;
 
@@ -28,9 +29,7 @@ export class UserService {
   register(model: Register) {
     return this.http.post<User>(`${this.baseUrl}/user/register`, model).pipe(
       map((user: User) => {
-        if (user) this.setUser(user);
-        console.log(user);
-        
+        if (user) this.setUser(user);      
       })
     );
   }

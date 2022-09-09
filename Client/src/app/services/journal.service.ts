@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Journal, JournalDto } from '../models/journal';
-import { UserService } from './user.service';
 import { ReplaySubject, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class JournalService {
   baseUrl = environment.apiUrl;
 

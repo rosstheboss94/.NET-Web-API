@@ -1,5 +1,5 @@
-  import { Component, OnInit } from '@angular/core';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RegisterModalComponent } from '../modals/register-modal/register-modal.component';
 
 @Component({
@@ -15,21 +15,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   openModal() {
-    const initialState: ModalOptions = {
-      initialState: {
-        list: [
-          'Open a modal with component',
-          'Pass your data',
-          'Do something else',
-          '...',
-        ],
-        title: 'Modal with component',
-      },
-    };
-    this.bsModalRef = this.modalService.show(
-      RegisterModalComponent,
-      initialState
-    );
+    this.bsModalRef = this.modalService.show(RegisterModalComponent);
     this.bsModalRef.content.closeBtnName = 'Close';
   }
 }

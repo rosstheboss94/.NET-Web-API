@@ -40,8 +40,6 @@ export class TradeFormComponent implements OnInit {
   }
 
   add(valid: any) {
-    console.log(valid);
-    
     this.tradeService.add(this.model).subscribe(() => {
       this.router.navigateByUrl(
         `${this.currentUser.userName}/journals/${this.selectedJournal.name}/trades`

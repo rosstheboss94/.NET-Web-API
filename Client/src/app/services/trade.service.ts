@@ -8,6 +8,7 @@ import { JournalService } from './journal.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class TradeService {
   baseUrl = environment.apiUrl;
 
