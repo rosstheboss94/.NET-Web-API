@@ -23,7 +23,7 @@ public class UserController : ApiController
     [HttpPost("register")]
     public async Task<IActionResult> Register(AppUserDto appUserDto)
     {
-        var exist = await _userManager.Users.AnyAsync(user => user.UserName == appUserDto.UserName);
+        var exist =  _userManager.Users.Any(user => user.UserName == appUserDto.UserName);
         if(exist) return BadRequest("Username taken");
         
         var token =  _tokenService.CreateToken(appUserDto);

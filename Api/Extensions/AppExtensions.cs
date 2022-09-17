@@ -12,7 +12,7 @@ public static class AppExtensions
     {
         services.AddDbContext<AppDbContext>(options => 
         {
-            options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
 
         services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
