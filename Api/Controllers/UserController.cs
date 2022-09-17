@@ -23,8 +23,9 @@ public class UserController : ApiController
     [HttpPost("register")]
     public async Task<IActionResult> Register(AppUserDto appUserDto)
     {
-        var exist =  _userManager.Users.Any(user => user.UserName == appUserDto.UserName);
-        if(exist) return BadRequest("Username taken");
+        var userExist = await _userManager.FindByNameAsync(appUserDto.UserName);
+
+        if(userExist != null) return BadRequest("Username taken");
         
         var token =  _tokenService.CreateToken(appUserDto);
         var user = new AppUser
@@ -42,7 +43,7 @@ public class UserController : ApiController
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto loginDto)
     {   
-        var user = await _userManager.Users.FirstOrDefaultAsync(user => user.UserName == loginDto.UserName);
+        var user = await _userManager.FindByNameAsync(loginDto.UserName);
 
         if(user == null) return BadRequest("Username doesn't exists");
 
