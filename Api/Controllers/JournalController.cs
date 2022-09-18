@@ -5,7 +5,6 @@ using Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
@@ -67,6 +66,6 @@ public class JournalController : ApiController
     
     private async Task<AppUser> GetUser()
     {
-        return await _userManager.Users.FirstOrDefaultAsync(user => user.UserName == User.GetUsername());
+        return await _userManager.FindByNameAsync(User.GetUsername());
     }
 }
