@@ -9,6 +9,7 @@ export interface Journal {
     appUser: User | null;
     appUserId: number;
     trades?: Trade[] | null;
+    toDelete?: boolean;
 }
 
 export interface JournalDto {

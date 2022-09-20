@@ -3,5 +3,6 @@
     "prettier.singleQuote": true,
     "prettier.useTabs": true,
     "appService.preDeployTask": "publish-release",
-    "appService.deploySubpath": "Api/bin/Release/net6.0/publish"
+    "appService.deploySubpath": "Api/bin/Release/net6.0/publish",
+    //"dotnet-test-explorer.testProjectPath": "*/*Test.csproj"
 }

@@ -52,7 +52,7 @@ public class JournalControllerTest
                     Id = "100",
                     UserName = "nouser",
                     PasswordHash = "nopassword",
-                    Email = "unemail"
+                    Email = "noemail"
                 });
         }
 

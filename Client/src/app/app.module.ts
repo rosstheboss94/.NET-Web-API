@@ -16,7 +16,6 @@ import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterModalComponent } from './components/modals/register-modal/register-modal.component';
 import { JournalListComponent } from './components/journal-list/journal-list.component';
-import { JournalCardComponent } from './components/cards/journal-card/journal-card.component';
 import { JournalFormComponent } from './components/forms/journal-form/journal-form.component';
 import { TradeFormComponent } from './components/forms/trade-form/trade-form.component';
 import { JournalEditComponent } from './components/journal-edit/journal-edit.component';
@@ -31,7 +30,6 @@ import { EditTradeFormComponent } from './components/forms/edit-trade-form/edit-
     HomeComponent,
     RegisterModalComponent,
     JournalListComponent,
-    JournalCardComponent,
     JournalFormComponent,
     TradeFormComponent,
     JournalEditComponent,

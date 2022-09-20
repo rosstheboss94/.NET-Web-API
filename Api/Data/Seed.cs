@@ -62,7 +62,7 @@ public static class Seed
                     new Trade() 
                     {
                         JournalId = journalId,
-                        Type = "Forex",
+                        Type = "FOREX",
                         Result = "WIN",
                         Ticker = "EUR/USD",
                         Entry = 1.02590,
@@ -74,7 +74,7 @@ public static class Seed
                     new Trade() 
                     {
                         JournalId = journalId,
-                        Type = "Forex",
+                        Type = "FOREX",
                         Result = "LOSS",
                         Ticker = "AUD/USD",
                         Entry = .71213,
@@ -86,7 +86,7 @@ public static class Seed
                     new Trade() 
                     {
                         JournalId = journalId,
-                        Type = "Forex",
+                        Type = "FOREX",
                         Result = "WIN",
                         Ticker = "USD/CAD",
                         Entry = 1.27728,
