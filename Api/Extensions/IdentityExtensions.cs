@@ -9,15 +9,15 @@ namespace Api.Extensions;
 
 public static class IdentityExtensions
 {
-    public static IServiceCollection Add(this IServiceCollection services, IConfiguration config)
+    public static void AddIdentityExtensions(this WebApplicationBuilder builder)
     {
-        services.AddAuthentication(options =>
+        builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            var key = Encoding.UTF8.GetBytes(config.GetSection("JWT_Key").Value);
+            var key = Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT_Key").Value);
 
             options.SaveToken = true;
             
@@ -30,14 +30,12 @@ public static class IdentityExtensions
         	};
         });
 
-        services.AddIdentityCore<AppUser>(o =>
+        builder.Services.AddIdentityCore<AppUser>(o =>
         {
             o.User.RequireUniqueEmail = true;
         })
         .AddSignInManager<SignInManager<AppUser>>()
         .AddEntityFrameworkStores<AppDbContext>()
-        .AddDefaultTokenProviders(); 
-
-        return services;        
+        .AddDefaultTokenProviders();       
     }
 }

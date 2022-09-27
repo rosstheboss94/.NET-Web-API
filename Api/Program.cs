@@ -4,13 +4,15 @@ using Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-AppExtensions.Add(builder.Services, builder.Configuration);
-
-IdentityExtensions.Add(builder.Services, builder.Configuration);
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddResponseCaching();
+builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.AddAppExtensions();
+builder.AddIdentityExtensions();
+builder.Services.AddAuthorizationPolicyExtensions();
+builder.Services.AddSwaggerConfigExtensions();
+builder.Services.AddServiceExtensions();
 
 var app = builder.Build();
 
@@ -21,8 +23,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+app.UseResponseCaching();
 
 app.UseAuthentication();
 app.UseAuthorization();
