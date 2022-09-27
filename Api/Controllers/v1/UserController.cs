@@ -1,13 +1,16 @@
 using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
-public class UserController : ApiController
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
+public class UserController : ControllerBase
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
@@ -21,6 +24,7 @@ public class UserController : ApiController
     }
     
     [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<IActionResult> Register(AppUserDto appUserDto)
     {
         var userExist = await _userManager.FindByNameAsync(appUserDto.UserName);
@@ -41,6 +45,7 @@ public class UserController : ApiController
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login(LoginDto loginDto)
     {   
         var user = await _userManager.FindByNameAsync(loginDto.UserName);

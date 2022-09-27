@@ -33,7 +33,7 @@ import { EditTradeFormComponent } from './components/forms/edit-trade-form/edit-
     JournalFormComponent,
     TradeFormComponent,
     JournalEditComponent,
-    EditTradeFormComponent
+    EditTradeFormComponent,
   ],
   imports: [
     BrowserModule,

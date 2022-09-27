@@ -2,14 +2,15 @@ using Api.Dtos;
 using Api.Entities;
 using Api.Interfaces;
 using Api.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 
 namespace Api.Controllers;
 
-[Authorize]
-public class JournalController : ApiController
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
+public class JournalController : ControllerBase
 {
     private readonly IJournalRepository _journalRepository;
     private readonly UserManager<AppUser> _userManager;
@@ -20,7 +21,7 @@ public class JournalController : ApiController
         _journalRepository = journalRepository;
     }
 
-    [HttpPost("{username}/journals/add")]
+    [HttpPost("user/journals/add")]
     public async Task<IActionResult> AddJournal(JournalDto journalDto)
     {
         var user = await GetUser();
@@ -31,7 +32,8 @@ public class JournalController : ApiController
     }
 
     [HttpGet("user/journals")]
-    public async Task<ActionResult<IEnumerable<Journal>>> GetAllJournals()
+    [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false)]
+    public async Task<IActionResult> GetAllJournals()
     {
         var user = await GetUser();
 

@@ -1,12 +1,13 @@
 using Api.Dtos;
 using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers;
 
-[Authorize]
-public class TradeController : ApiController
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
+public class TradeController : ControllerBase
 {
     private readonly ITradeRepository _tradeRepository;
 
@@ -16,6 +17,7 @@ public class TradeController : ApiController
     }
 
     [HttpGet("user/journal/{journalId}/trades")]
+    [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<IActionResult> GetAllTrades(int journalId)
     {
         var trades = await _tradeRepository.GetAllAsync(journalId);
