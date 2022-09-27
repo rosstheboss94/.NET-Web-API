@@ -12,6 +12,7 @@ builder.AddAppExtensions();
 builder.AddIdentityExtensions();
 builder.Services.AddAuthorizationPolicyExtensions();
 builder.Services.AddSwaggerConfigExtensions();
+builder.Services.AddApiVersioningExtensions();
 builder.Services.AddServiceExtensions();
 
 var app = builder.Build();

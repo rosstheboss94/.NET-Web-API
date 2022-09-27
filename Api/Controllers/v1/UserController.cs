@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
-public class UserController : ApiController
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
+public class UserController : ControllerBase
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;

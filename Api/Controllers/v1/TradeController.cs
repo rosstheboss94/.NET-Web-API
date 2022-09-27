@@ -1,11 +1,13 @@
 using Api.Dtos;
 using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers;
 
-public class TradeController : ApiController
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
+public class TradeController : ControllerBase
 {
     private readonly ITradeRepository _tradeRepository;
 
