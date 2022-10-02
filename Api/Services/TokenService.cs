@@ -29,7 +29,7 @@ public class TokenService : ITokenService
 		        new Claim(ClaimTypes.Name, appUserDto.UserName),
 		        new Claim(ClaimTypes.Email, appUserDto.Email)                
 	        }),
-	        Expires = DateTime.Now.AddHours(8),
+	        //Expires = DateTime.Now.AddHours(8),
 	        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),SecurityAlgorithms.HmacSha256Signature)
 	    };
 

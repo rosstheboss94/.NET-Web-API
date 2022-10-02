@@ -1,5 +1,5 @@
 ﻿using Api.Data;
-using Api.Entities;
+using Api.Models;
 using Api.Data.Repositories;
 using Api.Dtos;
 using FluentAssertions;

@@ -1,9 +1,10 @@
 using Api.Dtos;
-using Api.Entities;
+using Api.Models;
 using Api.Interfaces;
 using Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers;
 
@@ -32,6 +33,7 @@ public class JournalController : ControllerBase
     }
 
     [HttpGet("user/journals")]
+    [AllowAnonymous]
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<IActionResult> GetAllJournals()
     {
@@ -68,6 +70,7 @@ public class JournalController : ControllerBase
     
     private async Task<AppUser> GetUser()
     {
-        return await _userManager.FindByNameAsync(User.GetUsername());
+        //return await _userManager.FindByNameAsync(User.GetUsername());
+        return await _userManager.FindByNameAsync("user");
     }
 }

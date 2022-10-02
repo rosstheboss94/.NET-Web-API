@@ -1,5 +1,6 @@
 using Api.Dtos;
 using Api.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -17,6 +18,7 @@ public class TradeController : ControllerBase
     }
 
     [HttpGet("user/journal/{journalId}/trades")]
+    [AllowAnonymous]
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<IActionResult> GetAllTrades(int journalId)
     {

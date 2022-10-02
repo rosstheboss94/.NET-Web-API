@@ -1,6 +1,6 @@
 ﻿using Api.Controllers;
 using Api.Dtos;
-using Api.Entities;
+using Api.Models;
 using Api.Interfaces;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication;

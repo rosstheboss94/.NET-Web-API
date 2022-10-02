@@ -1,7 +1,7 @@
 ﻿using Api.Controllers;
 using Api.Data.Repositories;
 using Api.Dtos;
-using Api.Entities;
+using Api.Models;
 using Api.Test.Helpers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
