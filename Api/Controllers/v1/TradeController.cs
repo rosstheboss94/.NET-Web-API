@@ -18,7 +18,6 @@ public class TradeController : ControllerBase
     }
 
     [HttpGet("user/journal/{journalId}/trades")]
-    [AllowAnonymous]
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<IActionResult> GetAllTrades(int journalId)
     {

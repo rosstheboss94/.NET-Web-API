@@ -33,7 +33,6 @@ public class JournalController : ControllerBase
     }
 
     [HttpGet("user/journals")]
-    [AllowAnonymous]
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<IActionResult> GetAllJournals()
     {
@@ -70,7 +69,6 @@ public class JournalController : ControllerBase
     
     private async Task<AppUser> GetUser()
     {
-        //return await _userManager.FindByNameAsync(User.GetUsername());
-        return await _userManager.FindByNameAsync("user");
+        return await _userManager.FindByNameAsync(User.GetUsername());
     }
 }
